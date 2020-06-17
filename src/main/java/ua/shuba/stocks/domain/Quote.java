@@ -3,6 +3,7 @@ package ua.shuba.stocks.domain;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -41,7 +42,9 @@ public class Quote {
     private Long extendedPriceTime;
     private Double previousClose;
     private Long previousVolume;
-    //private Double change;
+
+    @Column(name = "change_in_price")
+    private Double change;
     private Double changePercent;
     private Double iexMarketPercent;
     private Integer iexVolume;
