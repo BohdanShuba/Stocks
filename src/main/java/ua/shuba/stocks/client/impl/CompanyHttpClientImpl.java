@@ -9,6 +9,7 @@ import org.apache.http.impl.client.HttpClients;
 import org.springframework.stereotype.Component;
 import ua.shuba.stocks.client.CompanyHttpClient;
 import ua.shuba.stocks.dto.DtoCompany;
+import ua.shuba.stocks.dto.DtoQuote;
 import ua.shuba.stocks.exception.StockException;
 
 import java.io.BufferedReader;
@@ -25,6 +26,14 @@ public class CompanyHttpClientImpl implements CompanyHttpClient {
         String jsonResponseGet = getJsonWithResponse(response);
         List<DtoCompany> dtoCompanies = convertJsonToDtoCompanyList(jsonResponseGet);
         return dtoCompanies;
+    }
+
+    public DtoQuote getCompanyQuote(String stockCode) {
+        String url = String.format("https://sandbox.iexapis.com/stable/stock/%s/quote?token=Tpk_ee567917a6b640bb8602834c9d30e571",stockCode);
+        CloseableHttpResponse response = sendRequest(url);
+        String jsonResponseGet = getJsonWithResponse(response);
+        DtoQuote dtoQuote = convertJsonToDtoQuote(jsonResponseGet);
+        return dtoQuote;
     }
 
     private String getJsonWithResponse(HttpResponse response) {
@@ -48,6 +57,11 @@ public class CompanyHttpClientImpl implements CompanyHttpClient {
         } catch (IOException e) {
             throw new StockException("Bad request");
         }
+    }
+
+    private DtoQuote convertJsonToDtoQuote(String dtoCompanyLine) {
+        DtoQuote dtoQuote = new Gson().fromJson(dtoCompanyLine, DtoQuote.class);
+        return dtoQuote;
     }
 
     private List<DtoCompany> convertJsonToDtoCompanyList(String dtoCompanyLine) {
