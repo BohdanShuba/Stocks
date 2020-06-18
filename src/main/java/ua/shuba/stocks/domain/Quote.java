@@ -3,13 +3,13 @@ package ua.shuba.stocks.domain;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
-@Table(name = "quote")
+@Table(name = "quote",
+        indexes = {@Index(columnList = "symbol", name = "quote_symbol_index"),
+                @Index(columnList = "volume", name = "quote_volume_index")},
+        uniqueConstraints = {@UniqueConstraint(name = "quote_symbol_constrain", columnNames = "symbol")})
 @Data
 @NoArgsConstructor
 public class Quote {
