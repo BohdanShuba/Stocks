@@ -2,7 +2,6 @@ package ua.shuba.stocks.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ua.shuba.stocks.comparator.QuoteComparator;
 import ua.shuba.stocks.domain.Company;
 import ua.shuba.stocks.domain.Quote;
 import ua.shuba.stocks.dto.DtoCompany;
@@ -23,18 +22,8 @@ public class CompanyServiceImpl implements CompanyService {
     private final CompanyRepository companyRepository;
     private final QuoteRepository quoteRepository;
 
-    public void printStats() {
-        System.out.println("The top 5 highest value stocks:");
-        List<Quote> topQuote = quoteRepository.findTop5ByOrderByPreviousVolumeDesc();
-        for (Quote quote : topQuote) {
-            System.out.println("Company name: " + quote.getCompanyName() + " - previous volume: " + quote.getPreviousVolume());
-        }
-        System.out.println("The top 5 highest value stocks (order by company name):");
-        QuoteComparator quoteComparator = new QuoteComparator();
-        topQuote.sort(quoteComparator);
-        for (Quote quote : topQuote) {
-            System.out.println("Company name: " + quote.getCompanyName() + " - previous volume: " + quote.getPreviousVolume());
-        }
+    public List<Quote> getTopValueStocks() {
+        return quoteRepository.findTop5ByOrderByPreviousVolumeDesc();
     }
 
     public void saveAllCompanies(List<DtoCompany> dtoCompanyList) {
