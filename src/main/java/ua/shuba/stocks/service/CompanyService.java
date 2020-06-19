@@ -8,6 +8,10 @@ import java.util.List;
 
 public interface CompanyService {
     void saveAllCompanies(List<DtoCompany> dtoCompanyList);
+
     void saveQuote(DtoQuote dtoQuote);
+
     List<Quote> getTopValueStocks();
+
+    void updateDifferencePrice(DtoQuote dtoQuote);
 }
