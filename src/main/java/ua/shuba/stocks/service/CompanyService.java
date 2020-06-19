@@ -12,6 +12,4 @@ public interface CompanyService {
     void saveQuote(DtoQuote dtoQuote);
 
     List<Quote> getTopValueStocks();
-
-    void updateDifferencePrice(DtoQuote dtoQuote);
 }

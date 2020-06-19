@@ -11,7 +11,6 @@ import javax.persistence.*;
         uniqueConstraints = {@UniqueConstraint(name = "company_symbol_constrain", columnNames = "symbol")})
 @Data
 @NoArgsConstructor
-
 public class Company {
     @Id
     private String symbol;
