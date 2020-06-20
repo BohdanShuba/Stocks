@@ -21,6 +21,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class DifferencePriceServiceImpl implements DifferencePriceService {
     private static final int NUMBER_OF_RESULTS = 5;
+    private static final BigDecimal ONE_HUNDRED = new BigDecimal("100");
 
     private final DifferencePriceRepository differencePriceRepository;
     private final QuoteRepository quoteRepository;
@@ -29,9 +30,9 @@ public class DifferencePriceServiceImpl implements DifferencePriceService {
         DifferencePrice differencePrice = new DifferencePrice();
         Optional<Quote> previousQuote = quoteRepository.findById(currentQuote.getSymbol());
         if (!previousQuote.isPresent()) {
-            differencePrice.setDifferencePrice(BigDecimal.valueOf(0.0000));
-        } else if (previousQuote.get().getLatestPrice() == 0.0) {
-            differencePrice.setDifferencePrice(BigDecimal.valueOf(100.00));
+            differencePrice.setDifferencePrice(BigDecimal.ZERO);
+        } else if (previousQuote.get().getLatestPrice().compareTo(BigDecimal.ZERO) == 0) {
+            differencePrice.setDifferencePrice(ONE_HUNDRED);
         } else {
             BigDecimal percentageDifference = calculatePercentageDifference(previousQuote.get().getLatestPrice(), currentQuote.getLatestPrice());
             differencePrice.setDifferencePrice(percentageDifference);
@@ -43,14 +44,10 @@ public class DifferencePriceServiceImpl implements DifferencePriceService {
     }
 
     public List<DtoDifferencePrice> getTopDifferencePrice() {
-        List<DtoDifferencePrice> topAbsDifferencePrice = differencePriceRepository.findTopAbsDifferencePrice(PageRequest.of(0, NUMBER_OF_RESULTS));
-        return topAbsDifferencePrice;
+        return differencePriceRepository.findTopAbsDifferencePrice(PageRequest.of(0, NUMBER_OF_RESULTS));
     }
 
-    private BigDecimal calculatePercentageDifference(Double first, Double second) {
-        second *= 100;
-        first *= 100;
-        double difference = (second - first) / first * 100;
-        return new BigDecimal(difference).setScale(4, RoundingMode.HALF_UP);
+    private BigDecimal calculatePercentageDifference(BigDecimal first, BigDecimal second) {
+        return second.subtract(first).multiply(ONE_HUNDRED).divide(first, 4, RoundingMode.HALF_UP);
     }
 }

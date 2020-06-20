@@ -5,4 +5,7 @@ public class StockException extends RuntimeException {
         super(message);
     }
 
+    public StockException(String message, Throwable cause) {
+        super(message, cause);
+    }
 }

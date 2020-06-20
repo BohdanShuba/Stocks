@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 @Entity
 @Table(name = "quote",
@@ -17,47 +18,47 @@ public class Quote {
     private String symbol;
     private String companyName;
     private String calculationPrice;
-    private Integer open;
+    private BigDecimal open;
     private Long openTime;
-    private Double close;
+    private BigDecimal close;
     private Long closeTime;
-    private Double high;
-    private Double low;
-    private Double latestPrice;
+    private BigDecimal high;
+    private BigDecimal low;
+    private BigDecimal latestPrice;
     private String latestSource;
     private String latestTime;
     private Long latestUpdate;
     private Long latestVolume;
     private Long volume;
-    private Double iexRealtimePrice;
+    private BigDecimal iexRealtimePrice;
     private Integer iexRealtimeSize;
     private Long iexLastUpdated;
-    private Double delayedPrice;
+    private BigDecimal delayedPrice;
     private Long delayedPriceTime;
-    private Double oddLotDelayedPrice;
+    private BigDecimal oddLotDelayedPrice;
     private Long oddLotDelayedPriceTime;
-    private Double extendedPrice;
-    private Double extendedChange;
-    private Double extendedChangePercent;
+    private BigDecimal extendedPrice;
+    private BigDecimal extendedChange;
+    private BigDecimal extendedChangePercent;
     private Long extendedPriceTime;
-    private Double previousClose;
+    private BigDecimal previousClose;
     private Long previousVolume;
 
     @Column(name = "change_in_price")
-    private Double change;
-    private Double changePercent;
-    private Double iexMarketPercent;
+    private BigDecimal change;
+    private BigDecimal changePercent;
+    private BigDecimal iexMarketPercent;
     private Integer iexVolume;
     private Long avgTotalVolume;
-    private Double iexBidPrice;
+    private BigDecimal iexBidPrice;
     private Integer iexBidSize;
-    private Double iexAskPrice;
+    private BigDecimal iexAskPrice;
     private Integer iexAskSize;
     private Long marketCap;
-    private Double week52High;
-    private Double week52Low;
-    private Double ytdChange;
-    private Double peRatio;
+    private BigDecimal week52High;
+    private BigDecimal week52Low;
+    private BigDecimal ytdChange;
+    private BigDecimal peRatio;
     private Long lastTradeTime;
     private Boolean isUSMarketOpen;
 }

@@ -11,14 +11,9 @@ import ua.shuba.stocks.service.SchedulerService;
 public class SchedulerServiceImpl implements SchedulerService {
     private final PrintService printService;
 
-
     @Scheduled(fixedRate = 5000)
+    @Override
     public void printStatistics() {
         printService.printStats();
-    }
-
-    @Scheduled(fixedRate = 500000)
-    public void downLoad() {
-        //////
     }
 }

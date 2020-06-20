@@ -18,29 +18,34 @@ public class PrintServiceImpl implements PrintService {
     private final DifferencePriceService differencePriceService;
 
     public void printStats() {
-        System.out.println("\nThe top 5 highest value stocks:");
+        print("The top 5 highest value stocks:");
         List<Quote> topQuote = companyService.getTopValueStocks();
         printTopCompany(topQuote);
-        System.out.println("\nThe top 5 highest value stocks (order by company name):");
+        print("The top 5 highest value stocks (order by company name):");
         QuoteComparator quoteComparator = new QuoteComparator();
         topQuote.sort(quoteComparator);
         printTopCompany(topQuote);
-        System.out.println("\nThe most recent 5 companies that have the greatest change percent in stock value:");
+        print("The most recent 5 companies that have the greatest change percent in stock value:");
         List<DtoDifferencePrice> topDifferencePrice = differencePriceService.getTopDifferencePrice();
         printTopDifferencePrice(topDifferencePrice);
-        System.out.println("\n");
+        print("\n");
 
     }
 
     private void printTopCompany(List<Quote> quoteList) {
         for (Quote quote : quoteList) {
-            System.out.println(String.format("Company name: %s - previous volume: %s", quote.getCompanyName(), quote.getPreviousVolume()));
+            print(String.format("Company name: %s - previous volume: %s", quote.getCompanyName(), quote.getPreviousVolume()));
         }
     }
 
     private void printTopDifferencePrice(List<DtoDifferencePrice> topDifferencePrice) {
         for (DtoDifferencePrice dtoDifferencePrice : topDifferencePrice) {
-            System.out.println(dtoDifferencePrice.toString());
+            print(dtoDifferencePrice.toString());
         }
     }
+
+    private void print(String s) {
+        System.out.println(s);
+    }
+
 }
